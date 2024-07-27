@@ -17,4 +17,4 @@ Please consider buying or donating, so I can actually keep this project updated.
 
 #
 
-More information will be given in the future.
+More information will be given in the future. :)
