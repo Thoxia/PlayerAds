@@ -1,0 +1,39 @@
+{
+  "url": "YOUR_WEBHOOK_URL",
+  "content": "@everyone",
+  "username": "PlayerAds",
+  "avatarUrl": "https://media.discordapp.net/attachments/1188431738016366674/1266420685748572273/thoxia-new.png?ex=66a515ac&is=66a3c42c&hm=a9f397347a8f626b5033ae03107f90d8474a3ea414b9945fb8dd9bd029eaae9e&=&format=webp&quality=lossless",
+  "tts": false,
+  "embeds": [
+    {
+      "fields": [
+        {
+          "name": "Advertiser",
+          "value": "```[player]```",
+          "inline": false
+        },
+        {
+          "name": "Message",
+          "value": "```[message]```",
+          "inline": false
+        }
+      ],
+      "description": "Yoo! We got a new advertisement, check that out!",
+      "color": {
+        "argb": "ff00ffff"
+      },
+      "footer": {
+        "text": "THOXIA - PlayerAds",
+        "iconUrl": "https://media.discordapp.net/attachments/1188431738016366674/1266420685748572273/thoxia-new.png?ex=66a515ac&is=66a3c42c&hm=a9f397347a8f626b5033ae03107f90d8474a3ea414b9945fb8dd9bd029eaae9e&=&format=webp&quality=lossless"
+      },
+      "thumbnail": {
+        "url": "https://media.discordapp.net/attachments/1188431738016366674/1266420685748572273/thoxia-new.png?ex=66a515ac&is=66a3c42c&hm=a9f397347a8f626b5033ae03107f90d8474a3ea414b9945fb8dd9bd029eaae9e&=&format=webp&quality=lossless"
+      },
+      "author": {
+        "name": "THOXIA - PlayerAds",
+        "url": "https://thoxia.com",
+        "iconUrl": "https://media.discordapp.net/attachments/1188431738016366674/1266420685748572273/thoxia-new.png?ex=66a515ac&is=66a3c42c&hm=a9f397347a8f626b5033ae03107f90d8474a3ea414b9945fb8dd9bd029eaae9e&=&format=webp&quality=lossless"
+      }
+    }
+  ]
+}

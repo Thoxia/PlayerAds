@@ -1,0 +1,7 @@
+hooks:
+  # set to "false" to disable hook, requires server restart!!!
+  mute:
+    LiteBans: true
+    Essentials: true
+  economy:
+    Vault: true

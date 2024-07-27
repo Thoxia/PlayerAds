@@ -1,0 +1,47 @@
+structure:
+  - "# # # # # # # # #"
+  - "# x x x x x x x #"
+  - "# x x x x x x x #"
+  - "# x x x x x x x #"
+  - "# x x x x x x x #"
+  - "# # # # ? # # # #"
+
+title: "<underlined>PlayerAds"
+
+items:
+  '#':
+    material: "GRAY_STAINED_GLASS_PANE"
+    name: "<aqua>ᴛʜᴏxɪᴀ"
+  '?': # will be used when a spot is empty
+    material: "BOOK"
+    name: "<#f1c232>What is advertisements?"
+    lore:
+      - ""
+      - "<#ffffcc>When you make an advertisement,"
+      - "<#ffffcc>whole servers get notified through,"
+      - "<#ffffcc>bossbar, actionbar, chat messages, gui and titles."
+      - ""
+      - "<#f1c232>Click <#ffffcc>on an empty spot to claim it!"
+      - ""
+  'x':
+    # if set to PLAYER_HEAD, we'll use advertiser's skin textures to fill the head
+    # ONLY WORKS ON PAPER!, on spigot it'll slow down the server!!!
+    material: "PLAYER_HEAD"
+    name: "<#f1c232><player>'s Advertisement"
+    lore:
+      - ""
+      - "<#f1c232>Message:"
+      - "<#ffffcc><message>"
+      - ""
+      - "<#f1c232>Remaining Time: <#ffffcc><remaining>"
+      - ""
+  'y': # will be used when a spot is empty
+    material: "BARRIER"
+    name: "<#f1c232>Empty Spot"
+    lore:
+      - ""
+      - "<#f1c232>Price: <#ffffcc><price>"
+      - "<#f1c232>Time: <#ffffcc><time>"
+      - ""
+      - "<#ffffcc>Click to take this spot! Hurry!"
+      - ""

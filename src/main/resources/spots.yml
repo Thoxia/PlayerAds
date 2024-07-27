@@ -1,0 +1,13 @@
+spots:
+  1:
+    slots: [ 22 ] # feel free to set only 1 slot as well. [ 1 ]
+    price: 1250
+    time: "5m"
+  2:
+    slots: [ 20, 21, 23, 24 ] # feel free to set only 1 slot as well. [ 1 ]
+    price: 1000
+    time: "10m"
+  3:
+    slots: [ 29, 30, 31, 32, 33 ] # feel free to set only 1 slot as well. [ 1 ]
+    price: 750
+    time: "15m"

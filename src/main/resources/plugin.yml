@@ -1,0 +1,12 @@
+name: PlayerAds
+version: '${version}'
+main: com.thoxia.playerads.PlayerAdsPlugin
+api-version: '1.16'
+libraries:
+  - "io.lettuce:lettuce-core:6.3.2.RELEASE"
+softdepend:
+  - Vault
+  - PlaceholderAPI
+  - Essentials
+  - LiteBans
+  - AdvancedBan
