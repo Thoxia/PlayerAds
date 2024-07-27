@@ -11,7 +11,9 @@ import com.thoxia.playerads.config.messages.MessagesEN;
 import com.thoxia.playerads.economy.EconomyManager;
 import com.thoxia.playerads.hook.HookManager;
 import com.thoxia.playerads.module.ModuleManager;
+import com.thoxia.playerads.papi.PapiHook;
 import com.thoxia.playerads.task.AdCheckerTask;
+import com.thoxia.playerads.task.CacheUpdaterTask;
 import com.thoxia.playerads.util.ChatUtils;
 import com.thoxia.playerads.util.UpdateChecker;
 import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
@@ -139,6 +141,15 @@ public final class PlayerAdsPlugin extends PlayerAdsAPI {
                 ));
             }
         }, this);
+
+        // no need to run cache update task on single instance setups
+        if (moduleManager.isModulePresent("MultiServer")) {
+            new CacheUpdaterTask(this).runTaskTimerAsynchronously(this, 3600, 3600);
+        }
+
+        if (this.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new PapiHook(this).register();
+        }
     }
 
     @Override

@@ -11,6 +11,18 @@ public interface AdManager {
 
     void init();
 
+    /**
+     * Has no impact on single instance setups
+     * @return Cached value of AdManager#getAds, cache updates every 3 minutes and on every update
+     */
+    Collection<Ad> getCachedAds();
+
+    void clearCache();
+
+    boolean addToCache(Ad ad);
+
+    boolean removeFromCache(Ad ad);
+
     CompletableFuture<Collection<Ad>> getAds();
 
     Collection<AdSpot> getSpots();

@@ -17,14 +17,15 @@ import sh.okx.timeapi.TimeAPI;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RequiredArgsConstructor
 public class LocalAdManager implements AdManager {
 
     private final PlayerAdsPlugin plugin;
-    private final Map<Ad, BossBar> bossBarMap = new HashMap<>();
-    private final Map<Integer, AdSpot> spotMap = new HashMap<>();
-    private final Map<AdSpot, Ad> adMap = new HashMap<>();
+    private final Map<Ad, BossBar> bossBarMap = new ConcurrentHashMap<>();
+    private final Map<Integer, AdSpot> spotMap = new ConcurrentHashMap<>();
+    private final Map<AdSpot, Ad> adMap = new ConcurrentHashMap<>();
 
     private long lastAd;
 
@@ -44,6 +45,26 @@ public class LocalAdManager implements AdManager {
                 spotMap.put(slot, new AdSpot(slot, price, duration));
             }
         }
+    }
+
+    @Override
+    public Collection<Ad> getCachedAds() {
+        return new ArrayList<>(this.adMap.values());
+    }
+
+    @Override
+    public void clearCache() {
+        // do nothing
+    }
+
+    @Override
+    public boolean addToCache(Ad ad) {
+        return false;
+    }
+
+    @Override
+    public boolean removeFromCache(Ad ad) {
+        return false;
     }
 
     @Override

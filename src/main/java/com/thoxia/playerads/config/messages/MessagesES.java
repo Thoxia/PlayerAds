@@ -43,6 +43,10 @@ public class MessagesES extends MessagesEN {
 
     private String emptyMessage = "<prefix> <red>¡Por favor ingresa un texto para anunciar!";
 
+    private String emptyPlaceholder = "<red>Este lugar está vacío.";
+
+    private String placeholderFormat = "<#f1c232><player>: <#ffffcc><message>";
+
     private String reloaded = "<prefix> <green>El plugin se ha recargado.";
 
     private String taken = "<prefix> <red>¡Este lugar ya está ocupado!";

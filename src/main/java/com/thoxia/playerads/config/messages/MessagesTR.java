@@ -43,6 +43,10 @@ public class MessagesTR extends MessagesEN {
 
     private String emptyMessage = "<prefix> <red>Lütfen reklam yapmak için bir metin girin!";
 
+    private String emptyPlaceholder = "<red>Bu yer boş.";
+
+    private String placeholderFormat = "<#f1c232><player>: <#ffffcc><message>";
+
     private String reloaded = "<prefix> <green>Eklenti yeniden yüklendi.";
 
     private String taken = "<prefix> <red>Bu yer zaten alınmış!";

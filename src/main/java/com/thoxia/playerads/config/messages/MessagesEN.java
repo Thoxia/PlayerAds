@@ -44,6 +44,10 @@ public class MessagesEN extends OkaeriConfig {
 
     private String emptyMessage = "<prefix> <red>Please enter a text to advertise!";
 
+    private String emptyPlaceholder = "<red>This place is empty.";
+
+    private String placeholderFormat = "<#f1c232><player>: <#ffffcc><message>";
+
     private String reloaded = "<prefix> <green>Plugin reloaded. Somethings may not be reloaded, always prefer to restart your server.";
 
     private String taken = "<prefix> <red>This place was taken!";
