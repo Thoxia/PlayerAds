@@ -14,6 +14,7 @@ However, this does not mean you will get support when using the plugin without p
 Support will be given to customers and donors only.<br>
 Please consider buying or donating, so I can actually keep this project updated.<br><br>
 (Modules provided by us are also open-sourced and can be found on our GitHub page.)<br>
+I would like to thank everyone, specially to our contributors, testers, supporters and customers.<br>
 
 #
 
