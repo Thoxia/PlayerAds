@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import xyz.xenondevs.inventoryaccess.component.ComponentWrapper;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.builder.AbstractItemBuilder;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
@@ -20,6 +21,7 @@ import xyz.xenondevs.invui.item.builder.SkullBuilder;
 import xyz.xenondevs.invui.window.Window;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
@@ -90,14 +92,24 @@ public class MainGui {
                     var item = gui.getItem(spot.getSlot());
                     if (item != null) continue;
 
+                    List<ComponentWrapper> lore = new ArrayList<>();
+
+                    if (spot.getPreset() == null) {
+                        lore.addAll(ChatUtils.formatForGui(config.getStringList("items.y.lore"),
+                                Placeholder.unparsed("price", ChatUtils.FORMATTER.format(spot.getPrice())),
+                                Placeholder.unparsed("time", ChatUtils.formatTimeBetween(System.currentTimeMillis() + spot.getDuration()))));
+                    } else {
+                        lore.addAll(ChatUtils.formatForGui(spot.getPreset().getLore()));
+                        lore.addAll(ChatUtils.formatForGui(config.getStringList("items.y.lore"),
+                                Placeholder.unparsed("price", ChatUtils.FORMATTER.format(spot.getPrice())),
+                                Placeholder.unparsed("time", ChatUtils.formatTimeBetween(System.currentTimeMillis() + spot.getDuration()))));
+                    }
+
                     gui.setItem(spot.getSlot(), new UpdatingItem(20, () ->
                             new ItemBuilder(Material.valueOf(config.getString("items.y.material")))
                                     .setCustomModelData(config.getInt("items.y.model"))
                                     .setDisplayName(ChatUtils.formatForGui(config.getString("items.y.name")))
-                                    .setLore(ChatUtils.formatForGui(config.getStringList("items.y.lore"),
-                                            Placeholder.unparsed("price", ChatUtils.FORMATTER.format(spot.getPrice())),
-                                            Placeholder.unparsed("time", ChatUtils.formatTimeBetween(System.currentTimeMillis() + spot.getDuration()))
-                                    )), event -> {
+                                    .setLore(lore), event -> {
 
                         if (!player.hasPermission(PlayerAdsAPI.CREATE_PERMISSION)) {
                             ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getNotEnoughPermission()));
@@ -105,8 +117,14 @@ public class MainGui {
                         }
 
                         player.closeInventory();
-                        plugin.getConversationFactory().withFirstPrompt(new AdInputConvo(plugin, spot))
-                                .buildConversation(player).begin();
+
+                        if (spot.getPreset() == null) {
+                            plugin.getConversationFactory().withFirstPrompt(new AdInputConvo(plugin, spot))
+                                    .buildConversation(player).begin();
+                            return;
+                        }
+
+                        plugin.getAdManager().createAd(player, spot, spot.getPreset().getPresetMessage());
                     }));
                 }
 

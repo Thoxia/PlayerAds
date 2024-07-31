@@ -1,6 +1,7 @@
 package com.thoxia.playerads.ad;
 
 import com.thoxia.playerads.PlayerAdsPlugin;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,6 +39,8 @@ public interface AdManager {
     CompletableFuture<Collection<Ad>> getAds(String player);
 
     void addAd(Ad ad);
+
+    void createAd(Player player, AdSpot spot, String message);
 
     /**
      * Also adds the ad to data storage

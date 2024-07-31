@@ -1,13 +1,39 @@
+presets:
+  shop:
+    message: "Yoo, come check my shop!"
+    lore: # added to top of the spot's lore
+      - ""
+      - "<gray>Sends this message:"
+      - "<yellow>Yoo, come check my shop!"
+  selling_minerals:
+    message: "I got the best minerals in the server!"
+    lore:
+      - ""
+      - "<gray>Sends this message:"
+      - "<yellow>I got the best minerals in the server!"
+  buying_minerals:
+    material: "DIAMOND"
+    message: "Buying minerals! Come sell!"
+    display-name: "<yellow>Buying Minerals"
+    model: 1
+    lore:
+      - ""
+      - "<gray>Sends this message:"
+      - "<yellow>Buying minerals! Come sell!"
+
 spots:
   1:
-    slots: [ 22 ] # feel free to set only 1 slot as well. [ 1 ]
+    slots: [ 22, 31 ] # feel free to set only 1 slot as well. [ 1 ]
     price: 1250
     time: "5m"
+    preset: shop # remove this line to allow players to announce anything they want
   2:
     slots: [ 20, 21, 23, 24 ] # feel free to set only 1 slot as well. [ 1 ]
     price: 1000
     time: "10m"
+    preset: selling_minerals
   3:
-    slots: [ 29, 30, 31, 32, 33 ] # feel free to set only 1 slot as well. [ 1 ]
+    slots: [ 29, 30, 32, 33 ] # feel free to set only 1 slot as well. [ 1 ]
     price: 750
     time: "15m"
+    preset: buying_minerals

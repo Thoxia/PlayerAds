@@ -2,7 +2,10 @@ package com.thoxia.playerads.ad;
 
 import com.thoxia.playerads.PlayerAdsPlugin;
 import com.thoxia.playerads.config.Config;
+import com.thoxia.playerads.gui.MainGui;
 import com.thoxia.playerads.util.ChatUtils;
+import com.thoxia.playerads.util.PermissionUtils;
+import com.thoxia.playerads.util.SkinUtils;
 import com.thoxia.playerads.util.webhook.WebhookUtils;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.audience.Audience;
@@ -10,7 +13,9 @@ import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import sh.okx.timeapi.TimeAPI;
 
@@ -18,6 +23,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 
 @RequiredArgsConstructor
 public class LocalAdManager implements AdManager {
@@ -26,6 +32,7 @@ public class LocalAdManager implements AdManager {
     private final Map<Ad, BossBar> bossBarMap = new ConcurrentHashMap<>();
     private final Map<Integer, AdSpot> spotMap = new ConcurrentHashMap<>();
     private final Map<AdSpot, Ad> adMap = new ConcurrentHashMap<>();
+    private final Map<String, AdPreset> presetMap = new ConcurrentHashMap<>();
 
     private long lastAd;
 
@@ -33,16 +40,27 @@ public class LocalAdManager implements AdManager {
     public void init() {
         this.spotMap.clear();
 
-        ConfigurationSection section = plugin.getSpotsConfig().getConfigurationSection("spots");
-        if (section == null) return;
+        ConfigurationSection spots = plugin.getSpotsConfig().getConfigurationSection("spots");
+        if (spots == null) return;
 
-        for (String key : section.getKeys(false)) {
-            List<Integer> slots = section.getIntegerList(key + ".slots");
-            double price = section.getDouble(key + ".price");
-            String time = section.getString(key + ".time");
+        ConfigurationSection presets = plugin.getSpotsConfig().getConfigurationSection("presets");
+        if (presets == null) return;
+
+        for (String key : presets.getKeys(false)) {
+            String message = presets.getString(key + ".message");
+            List<String> loreTexts = presets.getStringList(key + ".lore");
+
+            this.presetMap.put(key, new AdPreset(key, message, loreTexts));
+        }
+
+        for (String key : spots.getKeys(false)) {
+            List<Integer> slots = spots.getIntegerList(key + ".slots");
+            double price = spots.getDouble(key + ".price");
+            String time = spots.getString(key + ".time");
+            String presetName = spots.getString(key + ".preset");
             long duration = new TimeAPI(time).getMilliseconds();
             for (Integer slot : slots) {
-                spotMap.put(slot, new AdSpot(slot, price, duration));
+                spotMap.put(slot, new AdSpot(slot, price, duration, presetName == null ? null : this.presetMap.get(presetName)));
             }
         }
     }
@@ -177,6 +195,91 @@ public class LocalAdManager implements AdManager {
     @Override
     public CompletableFuture<Long> getLastAdvertisementTime() {
         return CompletableFuture.completedFuture(lastAd);
+    }
+
+    @Override
+    public void createAd(Player player, AdSpot spot, String message) {
+        plugin.getLogger().info("a");
+
+        plugin.getAdManager().getAds(player.getName()).exceptionally(throwable -> {
+            PlayerAdsPlugin.getInstance().getLogger().log(Level.SEVERE,
+                    "An exception was found whilst fetching ads by player!", throwable);
+            return null;
+        }).thenAccept(ads -> {
+
+            plugin.getLogger().info("b");
+
+            int max = PermissionUtils.getPlayerAdLimit(player, plugin);
+            if (ads.size() >= max) {
+                ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getMax(),
+                        Placeholder.unparsed("max", String.valueOf(max))));
+                player.playSound(player.getLocation(), Sound.valueOf(plugin.getPluginConfig().getDenySound()), 1, 1);
+                return;
+            }
+
+            plugin.getLogger().info("c");
+
+            plugin.getAdManager().getLastAdvertisementTime().exceptionally(throwable -> {
+                PlayerAdsPlugin.getInstance().getLogger().log(Level.SEVERE,
+                        "An exception was found whilst fetching last advertisement time!", throwable);
+                return null;
+            }).thenAccept(time -> {
+                if (System.currentTimeMillis() <= time + (plugin.getPluginConfig().getWaitBeforeNewAd() * 1000L)) {
+                    ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getWait()));
+                    player.playSound(player.getLocation(), Sound.valueOf(plugin.getPluginConfig().getDenySound()), 1, 1);
+                    return;
+                }
+
+                plugin.getLogger().info("d");
+
+                // foolish litebans
+                Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+
+                    plugin.getAdManager().getAd(spot).exceptionally(throwable -> {
+                        PlayerAdsPlugin.getInstance().getLogger().log(Level.SEVERE,
+                                "An exception was found whilst fetching ads by spot!", throwable);
+                        return null;
+                    }).thenAccept(ad -> {
+
+                        plugin.getLogger().info("e");
+
+                        if (ad != null) {
+                            ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getTaken()));
+                            player.playSound(player.getLocation(), Sound.valueOf(plugin.getPluginConfig().getDenySound()), 1, 1);
+                            return;
+                        }
+
+                        plugin.getLogger().info("f");
+
+                        if (plugin.getHookManager().getMuteManager().isMuted(player)) {
+                            ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getMuted()));
+                            player.playSound(player.getLocation(), Sound.valueOf(plugin.getPluginConfig().getDenySound()), 1, 1);
+                            return;
+                        }
+
+                        plugin.getLogger().info("g");
+
+                        if (!plugin.getEconomyManager().has(player, spot.getPrice())) {
+                            ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getNotEnoughMoney()));
+                            player.playSound(player.getLocation(), Sound.valueOf(plugin.getPluginConfig().getDenySound()), 1, 1);
+                            return;
+                        }
+
+                        plugin.getLogger().info("ğ");
+
+                        // no need to check if the text fulfills the requirements since it's already checked
+                        plugin.getEconomyManager().remove(player, spot.getPrice());
+
+                        ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getBought()));
+                        player.playSound(player.getLocation(), Sound.valueOf(plugin.getPluginConfig().getBoughtSound()), 1, 1);
+
+                        plugin.getAdManager().postAd(new Ad(player.getName(), message, spot, SkinUtils.getSkin(player)), true);
+
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> MainGui.open(player, plugin), 5);
+                    });
+                });
+            });
+        });
     }
 
 }
