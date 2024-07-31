@@ -13,8 +13,9 @@ Well... why not? (also it's a good project for my portfolio :p)<br><br>
 However, this does not mean you will get support when using the plugin without purchasing the plugin.<br>
 Support will be given to customers and donors only.<br>
 Please consider buying or donating, so I can actually keep this project updated.<br><br>
-(Modules provided by us are also open-sourced and can be found on our GitHub page.)<br>
+(Modules provided by us are also open-sourced and can be found on our GitHub page.)<br><br>
+I would like to thank everyone, specially to our contributors, testers, supporters and customers.<br>
 
 #
 
-More information will be given in the future.
+More information will be given in the future. :)
