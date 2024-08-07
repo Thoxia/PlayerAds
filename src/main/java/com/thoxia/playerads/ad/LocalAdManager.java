@@ -199,16 +199,11 @@ public class LocalAdManager implements AdManager {
 
     @Override
     public void createAd(Player player, AdSpot spot, String message) {
-        plugin.getLogger().info("a");
-
         plugin.getAdManager().getAds(player.getName()).exceptionally(throwable -> {
             PlayerAdsPlugin.getInstance().getLogger().log(Level.SEVERE,
                     "An exception was found whilst fetching ads by player!", throwable);
             return null;
         }).thenAccept(ads -> {
-
-            plugin.getLogger().info("b");
-
             int max = PermissionUtils.getPlayerAdLimit(player, plugin);
             if (ads.size() >= max) {
                 ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getMax(),
@@ -216,8 +211,6 @@ public class LocalAdManager implements AdManager {
                 player.playSound(player.getLocation(), Sound.valueOf(plugin.getPluginConfig().getDenySound()), 1, 1);
                 return;
             }
-
-            plugin.getLogger().info("c");
 
             plugin.getAdManager().getLastAdvertisementTime().exceptionally(throwable -> {
                 PlayerAdsPlugin.getInstance().getLogger().log(Level.SEVERE,
@@ -230,8 +223,6 @@ public class LocalAdManager implements AdManager {
                     return;
                 }
 
-                plugin.getLogger().info("d");
-
                 // foolish litebans
                 Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
 
@@ -240,16 +231,11 @@ public class LocalAdManager implements AdManager {
                                 "An exception was found whilst fetching ads by spot!", throwable);
                         return null;
                     }).thenAccept(ad -> {
-
-                        plugin.getLogger().info("e");
-
                         if (ad != null) {
                             ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getTaken()));
                             player.playSound(player.getLocation(), Sound.valueOf(plugin.getPluginConfig().getDenySound()), 1, 1);
                             return;
                         }
-
-                        plugin.getLogger().info("f");
 
                         if (plugin.getHookManager().getMuteManager().isMuted(player)) {
                             ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getMuted()));
@@ -257,15 +243,11 @@ public class LocalAdManager implements AdManager {
                             return;
                         }
 
-                        plugin.getLogger().info("g");
-
                         if (!plugin.getEconomyManager().has(player, spot.getPrice())) {
                             ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getNotEnoughMoney()));
                             player.playSound(player.getLocation(), Sound.valueOf(plugin.getPluginConfig().getDenySound()), 1, 1);
                             return;
                         }
-
-                        plugin.getLogger().info("ğ");
 
                         // no need to check if the text fulfills the requirements since it's already checked
                         plugin.getEconomyManager().remove(player, spot.getPrice());
