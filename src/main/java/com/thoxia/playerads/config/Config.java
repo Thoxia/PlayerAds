@@ -54,6 +54,9 @@ public class Config extends OkaeriConfig {
     @Comment({"Should we post webhooks to your discord on every advertisement?", "Embed & Webhook configuration can be found in embed.json"})
     private boolean postWebhooks = true;
 
+    @Comment({"Should we open the GUI after purchasing a new ad?"})
+    private boolean reopenGuiAfterPurchase = false;
+
     private BarSettings barSettings = new BarSettings();
 
     private TitleSettings titleSettings = new TitleSettings();

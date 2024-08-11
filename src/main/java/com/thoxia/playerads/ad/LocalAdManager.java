@@ -257,7 +257,8 @@ public class LocalAdManager implements AdManager {
 
                         plugin.getAdManager().postAd(new Ad(player.getName(), message, spot, SkinUtils.getSkin(player)), true);
 
-                        Bukkit.getScheduler().runTaskLater(plugin, () -> MainGui.open(player, plugin), 5);
+                        if (plugin.getPluginConfig().isReopenGuiAfterPurchase())
+                            Bukkit.getScheduler().runTaskLater(plugin, () -> MainGui.open(player, plugin), 5);
                     });
                 });
             });
