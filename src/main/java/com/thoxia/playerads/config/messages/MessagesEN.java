@@ -34,7 +34,11 @@ public class MessagesEN extends OkaeriConfig {
 
     private String notEnoughMoney = "<prefix> <red>Insufficient balance.";
 
-    private String muted = "<prefix> <red>You cannot buy advertisements while you are muted.";
+    private String mutedMessage = "<prefix> <red>You cannot buy advertisements while you are muted.";
+
+    private boolean mutedTitleEnabled = true;
+    private String mutedTitle = "<red><bold>YOU ARE MUTED!";
+    private String mutedSubtitle = "<red>Cannot buy ads while you are muted.";
 
     private String notEnoughPermission = "<prefix> <red>You don't have enough permission to do this.";
 

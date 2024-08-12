@@ -6,6 +6,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.title.Title;
 import org.bukkit.command.CommandSender;
 import xyz.xenondevs.inventoryaccess.component.AdventureComponentWrapper;
 import xyz.xenondevs.inventoryaccess.component.ComponentWrapper;
@@ -83,6 +84,10 @@ public class ChatUtils {
 
     public static void sendMessage(CommandSender player, Component component) {
         PlayerAdsPlugin.getInstance().getAdventure().sender(player).sendMessage(component);
+    }
+
+    public static void sendTitle(CommandSender player, Component title, Component subtitle) {
+        PlayerAdsPlugin.getInstance().getAdventure().sender(player).showTitle(Title.title(title, subtitle));
     }
 
     public static void sendMessage(CommandSender player, List<Component> components) {

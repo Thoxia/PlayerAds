@@ -238,7 +238,9 @@ public class LocalAdManager implements AdManager {
                         }
 
                         if (plugin.getHookManager().getMuteManager().isMuted(player)) {
-                            ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getMuted()));
+                            ChatUtils.sendMessage(player, ChatUtils.format(plugin.getPluginMessages().getMutedMessage()));
+                            if (plugin.getPluginMessages().isMutedTitleEnabled())
+                                ChatUtils.sendTitle(player, ChatUtils.format(plugin.getPluginMessages().getMutedTitle()), ChatUtils.format(plugin.getPluginMessages().getMutedSubtitle()));
                             player.playSound(player.getLocation(), Sound.valueOf(plugin.getPluginConfig().getDenySound()), 1, 1);
                             return;
                         }
