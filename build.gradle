@@ -33,11 +33,11 @@ dependencies {
 
     implementation 'eu.okaeri:okaeri-configs-yaml-bukkit:5.0.0-beta.5'
     implementation ("dev.triumphteam:triumph-cmd-bukkit:2.0.0-SNAPSHOT") { exclude group: "com.google.code.gson" }
-    implementation "xyz.xenondevs.invui:invui:1.33"
+    implementation "xyz.xenondevs.invui:invui:1.36"
 
     implementation "net.kyori:adventure-api:4.17.0"
     implementation "net.kyori:adventure-text-minimessage:4.17.0"
-    implementation "net.kyori:adventure-platform-bukkit:4.3.3"
+    implementation "net.kyori:adventure-platform-bukkit:4.3.4"
 
     // mute managers
     compileOnly 'net.essentialsx:EssentialsX:2.20.1'
