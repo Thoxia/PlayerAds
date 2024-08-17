@@ -25,7 +25,7 @@ items:
       - ""
   'x':
     # if set to PLAYER_HEAD, we'll use advertiser's skin textures to fill the head
-    # ONLY WORKS ON PAPER!, on spigot it'll slow down the server!!!
+    # ONLY WORKS ON PAPER!
     material: "PLAYER_HEAD"
     name: "<#f1c232><player>'s Advertisement"
     lore:
