@@ -165,8 +165,8 @@ public final class PlayerAdsPlugin extends PlayerAdsAPI {
     }
 
     public void unregisterCommands() {
-        List.of("playerads", "reklam", "reklamver", "advertisement",
-                "advertisements", "paadmin", "reklamadmin", "playeradsadmin", "adsadmin")
+        List.of("playerads", "reklam", "reklamver", "advertisement", "ads",
+                        "advertisements", "paadmin", "reklamadmin", "playeradsadmin", "adsadmin")
                 .forEach(this::unregisterCommand);
     }
 

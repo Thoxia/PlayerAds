@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 
 @RequiredArgsConstructor
-@Command(value = "playerads", alias = {"advertisement", "advertisements", "reklam", "reklamver"})
+@Command(value = "playerads", alias = {"ads", "advertisement", "advertisements", "reklam", "reklamver"})
 public class MainCommand extends BaseCommand {
 
     private final PlayerAdsPlugin plugin;
