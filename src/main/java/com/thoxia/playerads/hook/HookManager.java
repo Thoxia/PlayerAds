@@ -7,6 +7,7 @@ import com.thoxia.playerads.mute.MuteManager;
 import com.thoxia.playerads.mute.impl.EmptyMute;
 import com.thoxia.playerads.mute.impl.EssentialsMute;
 import com.thoxia.playerads.mute.impl.LitebansMute;
+import com.thoxia.playerads.mute.impl.AdvancedbanMute;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -30,6 +31,7 @@ public class HookManager {
     public void init() {
         muteHooks.put("Essentials", EssentialsMute.class);
         muteHooks.put("LiteBans", LitebansMute.class);
+        muteHooks.put("AdvancedBan", AdvancedbanMute.class);
 
         economyHooks.put("Vault", VaultEconomyManager.class);
     }
