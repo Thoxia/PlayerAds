@@ -3,5 +3,6 @@ hooks:
   mute:
     LiteBans: true
     Essentials: true
+    AdvancedBan: true
   economy:
     Vault: true
